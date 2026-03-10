@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import "./App.css";
 
 const SHEET_URL =
   "https://opensheet.elk.sh/1HAj-VY7qofjhh75XhIU2EpgEICxHaCP6roKljB2UzHc/Form%20Responses%201";
@@ -87,84 +88,74 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Daily Orders</h2>
+    <div className="container">
+      <div className="header">
+        <h1>Order Dashboard</h1>
 
-      <select
-        value={worker}
-        onChange={(e) => handleWorkerChange(e.target.value)}
-        style={{ marginBottom: "20px", padding: "6px" }}
-      >
-        <option value="All">All</option>
-        <option value="Rinku">Rinku</option>
-        <option value="Vijay">Vijay</option>
-        <option value="Nitesh">Nitesh</option>
-      </select>
+        <select
+          value={worker}
+          onChange={(e) => handleWorkerChange(e.target.value)}
+        >
+          <option value="All">All Workers</option>
+          <option value="Rinku">Rinku</option>
+          <option value="Vijay">Vijay</option>
+          <option value="Nitesh">Nitesh</option>
+        </select>
+      </div>
 
       {loading ? (
-        <h3>Loading Orders...</h3>
+        <div className="loading">Loading Orders...</div>
       ) : (
-        <table border="1" cellPadding="10">
-          <thead>
-            <tr>
-              <th>Number</th>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Advance</th>
-              <th>Banayega</th>
-              <th>Time Left</th>
-              <th>Complete</th>
-              <th>Message</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {sortedOrders.map((order, index) => (
-              <tr key={index}>
-                <td>{order.Number}</td>
-                <td>{order.Product}</td>
-                <td>{order.Price}</td>
-                <td>{order.Advance}</td>
-                <td>{order.Banayega}</td>
-
-                <td>{getRemainingDays(order.Time)}</td>
-
-                <td>
-                  <button
-                    disabled={completeLoading === order.Timestamp}
-                    onClick={() => markComplete(order.Timestamp)}
-                    style={{
-                      background: "green",
-                      color: "white",
-                      border: "none",
-                      padding: "6px 10px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {completeLoading === order.Timestamp
-                      ? "Completing..."
-                      : "Complete"}
-                  </button>
-                </td>
-
-                <td>
-                  <button
-                    onClick={() => sendMessage(order.Number, order.Product)}
-                    style={{
-                      background: "blue",
-                      color: "white",
-                      border: "none",
-                      padding: "6px 10px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Message
-                  </button>
-                </td>
+        <div className="tableWrapper">
+          <table className="ordersTable">
+            <thead>
+              <tr>
+                <th>Number</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Advance</th>
+                <th>Worker</th>
+                <th>Deadline</th>
+                <th>Complete</th>
+                <th>Message</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {sortedOrders.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.Number}</td>
+                  <td>{order.Product}</td>
+                  <td>₹{order.Price}</td>
+                  <td>₹{order.Advance}</td>
+                  <td>{order.Banayega}</td>
+                  <td>{getRemainingDays(order.Time)}</td>
+
+                  <td>
+                    <button
+                      className="completeBtn"
+                      disabled={completeLoading === order.Timestamp}
+                      onClick={() => markComplete(order.Timestamp)}
+                    >
+                      {completeLoading === order.Timestamp
+                        ? "Processing..."
+                        : "Complete"}
+                    </button>
+                  </td>
+
+                  <td>
+                    <button
+                      className="msgBtn"
+                      onClick={() => sendMessage(order.Number)}
+                    >
+                      Message
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

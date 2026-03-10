@@ -32,7 +32,100 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+body {
+  background: #f4f6fb;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+.container {
+  width: 1200px;
+  margin: auto;
+  padding: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.tableWrapper {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.ordersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ordersTable th {
+  background: #f7f7f7;
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.ordersTable td {
+  padding: 14px;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
+
+.ordersTable tr:hover {
+  background: #fafafa;
+}
+
+.completeBtn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.completeBtn:hover {
+  background: #1e8449;
+}
+
+.msgBtn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.msgBtn:hover {
+  background: #2c80b4;
+}
+
+.loading {
+  text-align: center;
+  font-size: 20px;
+  padding: 50px;
 }
