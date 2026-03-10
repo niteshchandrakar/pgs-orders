@@ -101,7 +101,7 @@ function App() {
             <th>Price</th>
             <th>Advance</th>
             <th>Banayega</th>
-            <th>Delivery Date</th>
+
             <th>Time Left</th>
             <th>Complete</th>
             <th>Message</th>
@@ -116,7 +116,7 @@ function App() {
               <td>{order.Price}</td>
               <td>{order.Advance}</td>
               <td>{order.Banayega}</td>
-              <td>{order.Time}</td>
+
               <td>{getRemainingDays(order.Time)}</td>
 
               <td>
