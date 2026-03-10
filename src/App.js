@@ -91,7 +91,17 @@ function App() {
     <div className="container">
       <div className="header">
         <h1>Order Dashboard</h1>
-
+        <button
+          className="neworder"
+          onClick={() =>
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSfYhQ_tslMOWBHoHwVvJckekoZh107JYP7LOzeLXRp8QR13pg/viewform",
+              "_blank",
+            )
+          }
+        >
+          New Order
+        </button>
         <select
           value={worker}
           onChange={(e) => handleWorkerChange(e.target.value)}
