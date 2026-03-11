@@ -1,12 +1,14 @@
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import Stats from "./Stats";
+import { useNavigate } from "react-router-dom";
 const SHEET_URL =
   "https://opensheet.elk.sh/1HAj-VY7qofjhh75XhIU2EpgEICxHaCP6roKljB2UzHc/Form%20Responses%201";
 
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwx7FrmYqoTfw8VP5dvmbuGHFLOelkV1Dxx3VklYG2BfZEI25zk1XjOm-CSCJ-k0CqNnw/exec";
 function Orders() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [worker, setWorker] = useState(localStorage.getItem("worker") || "All");
 
@@ -99,6 +101,12 @@ function Orders() {
           }
         >
           New Order
+        </button>
+        <button
+          className="completedorder"
+          onClick={() => navigate("/completed")}
+        >
+          Completed Orders
         </button>
         <select
           value={worker}
