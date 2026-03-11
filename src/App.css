@@ -138,3 +138,41 @@ select {
   font-size: 20px;
   padding: 50px;
 }
+
+.statsBox {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.statsBox h2 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+  border-left: 4px solid #4caf50;
+  padding-left: 8px;
+}
+
+.statsBox div {
+  background: #f7f9fc;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statsBox div:hover {
+  background: #eef3ff;
+  transition: 0.2s;
+}
+
+.statsBox span {
+  font-weight: bold;
+}
