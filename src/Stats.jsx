@@ -16,7 +16,7 @@ function Stats({ orders, worker }) {
     const last30 = today.subtract(30, "day");
 
     const last30Orders = workerOrders.filter((o) =>
-      dayjs(o.Time).isAfter(last30),
+      dayjs(o.complete).isAfter(last30),
     );
 
     const totalAmount = last30Orders.reduce(
@@ -39,7 +39,7 @@ function Stats({ orders, worker }) {
       const day = today.subtract(i, "day").format("YYYY-MM-DD");
 
       const dayOrders = workerOrders.filter(
-        (o) => dayjs(o.Time).format("YYYY-MM-DD") === day,
+        (o) => dayjs(o.complete).format("YYYY-MM-DD") === day,
       );
 
       const total = dayOrders.reduce(

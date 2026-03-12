@@ -58,7 +58,7 @@ function Orders() {
   };
 
   const activeOrders = orders.filter(
-    (o) => o["Column 1"]?.toLowerCase() !== "completed",
+    (o) => o.status?.toLowerCase() !== "completed",
   );
 
   const filteredOrders =
