@@ -17,7 +17,7 @@ function AdminDashboard() {
   }, []);
 
   const completed = orders.filter(
-    (o) => o["Column 1"]?.toLowerCase() === "completed",
+    (o) => o.status?.toLowerCase() === "completed",
   );
 
   const filteredOrders =
@@ -31,7 +31,7 @@ function AdminDashboard() {
     if (worker === "All") {
       return workers.map((w) => {
         const workerOrders = completed.filter(
-          (o) => o.Banayega === w && dayjs(o.Time).isAfter(start),
+          (o) => o.Banayega === w && dayjs(o.complete).isAfter(start),
         );
 
         const total = workerOrders.reduce(
@@ -48,7 +48,7 @@ function AdminDashboard() {
     }
 
     const workerOrders = filteredOrders.filter((o) =>
-      dayjs(o.Time).isAfter(start),
+      dayjs(o.complete).isAfter(start),
     );
 
     const total = workerOrders.reduce(
@@ -75,7 +75,7 @@ function AdminDashboard() {
       const day = dayjs().subtract(i, "day").format("YYYY-MM-DD");
 
       const dayOrders = filteredOrders.filter(
-        (o) => dayjs(o.Time).format("YYYY-MM-DD") === day,
+        (o) => dayjs(o.complete).format("YYYY-MM-DD") === day,
       );
 
       const total = dayOrders.reduce(
@@ -113,7 +113,16 @@ function AdminDashboard() {
           </option>
         ))}
       </select>
-
+      <button
+        onClick={() =>
+          window.open(
+            "https://docs.google.com/spreadsheets/d/1HAj-VY7qofjhh75XhIU2EpgEICxHaCP6roKljB2UzHc/edit?gid=2039311531#gid=2039311531",
+            "_blank",
+          )
+        }
+      >
+        Sheet
+      </button>
       {/* Summary */}
       <div className="summaryCards">
         <div className="card">
