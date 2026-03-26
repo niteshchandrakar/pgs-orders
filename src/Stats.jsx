@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 
 function Stats({ orders, worker }) {
   const completedOrders = orders.filter(
-    (o) => o.status?.toLowerCase() === "completed",
+    (o) => o.status?.toLowerCase() === "delivered",
   );
 
   const workerOrders =

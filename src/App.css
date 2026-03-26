@@ -364,3 +364,98 @@ select {
   text-align: center;
   margin-top: 20px;
 }
+
+/* Section Title */
+.sectionTitle {
+  margin-top: 40px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+/* Table Wrapper */
+.tableWrapper {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Completed Table */
+.completedTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f9fff9;
+}
+
+/* Header */
+.completedTable thead {
+  background: linear-gradient(90deg, #4caf50, #66bb6a);
+  color: white;
+}
+
+.completedTable th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Rows */
+.completedRow {
+  transition: 0.2s;
+}
+
+.completedRow:hover {
+  background: #eaffea;
+}
+
+/* Cells */
+.completedTable td {
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* Product */
+.product {
+  font-weight: 500;
+}
+
+/* Price */
+.price {
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+/* Advance */
+.advance {
+  font-weight: bold;
+  color: #1565c0;
+}
+
+/* Remaining */
+.remaining {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* Worker */
+.worker {
+  font-weight: 500;
+}
+
+/* Delivered Button */
+.deliveredBtn {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.deliveredBtn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #43a047, #1b5e20);
+}
