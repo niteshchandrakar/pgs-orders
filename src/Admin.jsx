@@ -25,13 +25,14 @@ function AdminDashboard() {
       ? completed
       : completed.filter((o) => o.Banayega === worker);
 
+  // 🔥 Last 30 Days Stats (with profit)
   const getStats = (days) => {
     const start = dayjs().subtract(days, "day");
 
     if (worker === "All") {
       return workers.map((w) => {
         const workerOrders = completed.filter(
-          (o) => o.Banayega === w && dayjs(o.complete).isAfter(start),
+          (o) => o.Banayega === w && dayjs(o.Time).isAfter(start),
         );
 
         const total = workerOrders.reduce(
@@ -39,20 +40,31 @@ function AdminDashboard() {
           0,
         );
 
+        const profit = workerOrders.reduce(
+          (sum, o) => sum + (parseInt(o.Profit) || 0),
+          0,
+        );
+
         return {
           worker: w,
           count: workerOrders.length,
           amount: total,
+          profit: profit,
         };
       });
     }
 
     const workerOrders = filteredOrders.filter((o) =>
-      dayjs(o.complete).isAfter(start),
+      dayjs(o.Time).isAfter(start),
     );
 
     const total = workerOrders.reduce(
       (sum, o) => sum + (parseInt(o.Price) || 0),
+      0,
+    );
+
+    const profit = workerOrders.reduce(
+      (sum, o) => sum + (parseInt(o.Profit) || 0),
       0,
     );
 
@@ -61,13 +73,14 @@ function AdminDashboard() {
         worker,
         count: workerOrders.length,
         amount: total,
+        profit: profit,
       },
     ];
   };
 
   const last30 = getStats(30);
 
-  // last 15 days production
+  // 🔥 Last 15 Days Production (with profit)
   const getLast15Days = () => {
     const stats = [];
 
@@ -75,7 +88,7 @@ function AdminDashboard() {
       const day = dayjs().subtract(i, "day").format("YYYY-MM-DD");
 
       const dayOrders = filteredOrders.filter(
-        (o) => dayjs(o.complete).format("YYYY-MM-DD") === day,
+        (o) => dayjs(o.Time).format("YYYY-MM-DD") === day,
       );
 
       const total = dayOrders.reduce(
@@ -83,10 +96,16 @@ function AdminDashboard() {
         0,
       );
 
+      const profit = dayOrders.reduce(
+        (sum, o) => sum + (parseInt(o.Profit) || 0),
+        0,
+      );
+
       stats.push({
         date: day,
         count: dayOrders.length,
         amount: total,
+        profit: profit,
       });
     }
 
@@ -97,6 +116,11 @@ function AdminDashboard() {
 
   const totalRevenue = filteredOrders.reduce(
     (sum, o) => sum + (parseInt(o.Price) || 0),
+    0,
+  );
+
+  const totalProfit = filteredOrders.reduce(
+    (sum, o) => sum + (parseInt(o.Profit) || 0),
     0,
   );
 
@@ -113,6 +137,7 @@ function AdminDashboard() {
           </option>
         ))}
       </select>
+
       <button
         onClick={() =>
           window.open(
@@ -123,6 +148,7 @@ function AdminDashboard() {
       >
         Sheet
       </button>
+
       {/* Summary */}
       <div className="summaryCards">
         <div className="card">
@@ -133,6 +159,11 @@ function AdminDashboard() {
         <div className="card">
           <h3>Total Revenue</h3>
           <p>₹{totalRevenue}</p>
+        </div>
+
+        <div className="card">
+          <h3>Total Profit</h3>
+          <p>₹{totalProfit}</p>
         </div>
       </div>
 
@@ -145,6 +176,7 @@ function AdminDashboard() {
             <span>{w.worker}</span>
             <span>{w.count} orders</span>
             <span>₹{w.amount}</span>
+            <span>₹{w.profit} profit</span>
           </div>
         ))}
       </div>
@@ -158,6 +190,7 @@ function AdminDashboard() {
             <span>{d.date}</span>
             <span>{d.count} orders</span>
             <span>₹{d.amount}</span>
+            <span>₹{d.profit} profit</span>
           </div>
         ))}
       </div>
