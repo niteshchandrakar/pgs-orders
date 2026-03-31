@@ -35,13 +35,12 @@ function Stats({ orders, worker }) {
     const today = dayjs();
     const stats = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 15; i++) {
       const day = today.subtract(i, "day").format("YYYY-MM-DD");
 
       const dayOrders = workerOrders.filter(
         (o) => dayjs(o.complete).format("YYYY-MM-DD") === day,
       );
-
       const total = dayOrders.reduce(
         (sum, o) => sum + (parseInt(o.Price) || 0),
         0,
@@ -67,7 +66,7 @@ function Stats({ orders, worker }) {
         {worker} → {last30.count} orders
       </div>
 
-      <h2>Last 5 Days</h2>
+      <h2>Last 15 Days</h2>
 
       {last5Days.map((d) => (
         <div key={d.date}>
