@@ -17,7 +17,7 @@ function AdminDashboard() {
   }, []);
 
   const completed = orders.filter(
-    (o) => o.status?.toLowerCase() === "completed",
+    (o) => o.status?.toLowerCase() === "delivered",
   );
 
   const filteredOrders =
@@ -84,7 +84,7 @@ function AdminDashboard() {
   const getLast15Days = () => {
     const stats = [];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 30; i++) {
       const day = dayjs().subtract(i, "day").format("YYYY-MM-DD");
 
       const dayOrders = filteredOrders.filter(
@@ -183,7 +183,7 @@ function AdminDashboard() {
 
       {/* Last 15 Days */}
       <div className="statsSection">
-        <h2>Last 15 Days Production</h2>
+        <h2>Last 30 Days Production</h2>
 
         {last15.map((d) => (
           <div className="row" key={d.date}>
