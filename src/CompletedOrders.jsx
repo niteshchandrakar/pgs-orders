@@ -19,7 +19,7 @@ function CompletedOrders() {
   }, []);
 
   const completedOrders = orders.filter(
-    (o) => o.status?.toLowerCase() === "completed",
+    (o) => o.status?.toLowerCase() === "delivered",
   );
 
   return (
