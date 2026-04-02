@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import Stats from "./Stats";
 import { useNavigate } from "react-router-dom";
+import EditModal from "./EditModal";
 
 const SHEET_URL =
   "https://opensheet.elk.sh/1HAj-VY7qofjhh75XhIU2EpgEICxHaCP6roKljB2UzHc/Form%20Responses%201";
@@ -13,7 +14,8 @@ function Orders() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [worker, setWorker] = useState(localStorage.getItem("worker") || "All");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completeLoading, setCompleteLoading] = useState(null);
   const [deliveredLoading, setDeliveredLoading] = useState(null);
@@ -122,7 +124,13 @@ function Orders() {
     const url = `https://wa.me/91${number}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
   };
-
+  const handleUpdateOrder = (updatedData) => {
+    setOrders((prev) =>
+      prev.map((o) =>
+        o.Timestamp === selectedOrder.Timestamp ? { ...o, ...updatedData } : o,
+      ),
+    );
+  };
   return (
     <div className="container">
       <div className="header">
@@ -146,7 +154,9 @@ function Orders() {
         >
           Completed Orders
         </button>
-
+        <button className="completedorder" onClick={() => navigate("/mangana")}>
+          Mangana hai
+        </button>
         <select
           value={worker}
           onChange={(e) => handleWorkerChange(e.target.value)}
@@ -174,6 +184,7 @@ function Orders() {
                   <th>Advance</th>
                   <th>Worker</th>
                   <th>Deadline</th>
+                  <th>Edit</th>
                   <th>Complete</th>
                   <th>Message</th>
                 </tr>
@@ -188,16 +199,28 @@ function Orders() {
                     <td>₹{order.Advance}</td>
                     <td>{order.Banayega}</td>
                     <td>{getRemainingDays(order.Time)}</td>
-
+                    <td>
+                      <button
+                        className="editBtn"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </td>
                     <td>
                       <button
                         className="completeBtn"
                         disabled={completeLoading === order.Timestamp}
                         onClick={() => markComplete(order.Timestamp)}
                       >
-                        {completeLoading === order.Timestamp
-                          ? "Processing..."
-                          : "Complete"}
+                        {completeLoading === order.Timestamp ? (
+                          <span className="loader"></span>
+                        ) : (
+                          "Complete"
+                        )}
                       </button>
                     </td>
 
@@ -254,9 +277,11 @@ function Orders() {
                           disabled={deliveredLoading === order.Timestamp}
                           onClick={() => markDelivered(order.Timestamp)}
                         >
-                          {deliveredLoading === order.Timestamp
-                            ? "Processing..."
-                            : "Delivered"}
+                          {deliveredLoading === order.Timestamp ? (
+                            <span className="loader"></span>
+                          ) : (
+                            "Delivered"
+                          )}
                         </button>
                       </td>
                     </tr>
@@ -267,7 +292,12 @@ function Orders() {
           </div>
         </>
       )}
-
+      <EditModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        order={selectedOrder}
+        onUpdate={handleUpdateOrder}
+      />
       <Stats orders={orders} worker={worker} />
     </div>
   );

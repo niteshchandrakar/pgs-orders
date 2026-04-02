@@ -3,6 +3,7 @@ import AdminDashboard from "./Admin";
 import "./App.css";
 import Orders from "./Orders";
 import CompletedOrders from "./CompletedOrders";
+import Mangana from "./components/Mangana";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Orders />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/completed" element={<CompletedOrders />} />
+        <Route path="/mangana" element={<Mangana />} />
       </Routes>
     </BrowserRouter>
   );
