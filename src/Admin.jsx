@@ -123,6 +123,39 @@ function AdminDashboard() {
     0,
   );
 
+  const getLast4MonthsStats = () => {
+    const stats = [];
+
+    for (let i = 0; i < 4; i++) {
+      const month = dayjs().subtract(i, "month");
+      const monthKey = month.format("YYYY-MM"); // 2026-04
+      const monthName = month.format("MMM YYYY"); // Apr 2026
+
+      const monthOrders = filteredOrders.filter(
+        (o) => dayjs(o.Time).format("YYYY-MM") === monthKey,
+      );
+
+      const total = monthOrders.reduce(
+        (sum, o) => sum + (parseInt(o.Price) || 0),
+        0,
+      );
+
+      const profit = monthOrders.reduce(
+        (sum, o) => sum + (parseInt(o.Profit) || 0),
+        0,
+      );
+
+      stats.push({
+        month: monthName,
+        count: monthOrders.length,
+        amount: total,
+        profit: profit,
+      });
+    }
+
+    return stats.reverse(); // oldest → latest
+  };
+  const last4Months = getLast4MonthsStats();
   return (
     <div className="adminContainer">
       <h1>Admin Dashboard</h1>
@@ -165,7 +198,18 @@ function AdminDashboard() {
           <p>₹{totalProfit}</p>
         </div>
       </div>
+      <div className="statsSection">
+        <h2>Last 4 Months Performance</h2>
 
+        {last4Months.map((m) => (
+          <div className="row" key={m.month}>
+            <span>{m.month}</span>
+            <span>{m.count} orders</span>
+            <span>₹{m.amount}</span>
+            <span>₹{m.profit} profit</span>
+          </div>
+        ))}
+      </div>
       {/* Last 30 Days */}
       <div className="statsSection">
         <h2>Last 30 Days Worker Performance</h2>
