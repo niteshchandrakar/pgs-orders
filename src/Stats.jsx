@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 
 function Stats({ orders, worker }) {
-  const completedOrders = orders.filter(
-    (o) => o.status?.toLowerCase() === "delivered",
+  const completedOrders = orders.filter((o) =>
+    ["delivered", "completed"].includes(o.status?.toLowerCase()),
   );
 
   const workerOrders =
@@ -31,7 +31,7 @@ function Stats({ orders, worker }) {
   };
 
   // last 5 days
-  const getLast5DaysStats = () => {
+  const getLast15DaysStats = () => {
     const today = dayjs();
     const stats = [];
 
@@ -57,20 +57,20 @@ function Stats({ orders, worker }) {
   };
 
   const last30 = getLast30DaysStats();
-  const last5Days = getLast5DaysStats();
+  const last15Days = getLast15DaysStats();
 
   return (
     <div className="statsBox">
       <h2>Last 30 Days</h2>
       <div>
-        {worker} → {last30.count} orders
+        {worker} → {last30.count}
       </div>
 
       <h2>Last 15 Days</h2>
 
-      {last5Days.map((d) => (
+      {last15Days.map((d) => (
         <div key={d.date}>
-          {d.date} → {d.count} orders | ₹{d.amount}
+          {d.date} → {d.count} orders
         </div>
       ))}
     </div>
