@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
+import { useState } from "react";
 
 function Stats({ orders, worker }) {
   const completedOrders = orders.filter((o) =>
     ["delivered", "completed"].includes(o.status?.toLowerCase()),
   );
-
+  const [expandedDate, setExpandedDate] = useState(null);
   const workerOrders =
     worker === "All"
       ? completedOrders
@@ -29,7 +30,9 @@ function Stats({ orders, worker }) {
       amount: totalAmount,
     };
   };
-
+  const handleToggle = (date) => {
+    setExpandedDate((prev) => (prev === date ? null : date));
+  };
   // last 5 days
   const getLast15DaysStats = () => {
     const today = dayjs();
@@ -70,7 +73,40 @@ function Stats({ orders, worker }) {
 
       {last15Days.map((d) => (
         <div key={d.date}>
-          {d.date} → {d.count} orders
+          <div
+            style={{ cursor: "pointer", fontWeight: "bold" }}
+            onClick={() => handleToggle(d.date)}
+          >
+            {d.date} → {d.count} orders
+          </div>
+
+          {/* 👇 Expandable Table */}
+          {expandedDate === d.date && (
+            <table className="ordersTable" style={{ marginTop: "10px" }}>
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Worker</th>
+                </tr>
+              </thead>
+              <tbody>
+                {workerOrders
+                  .filter(
+                    (o) => dayjs(o.complete).format("YYYY-MM-DD") === d.date,
+                  )
+                  .map((order, index) => (
+                    <tr key={index}>
+                      <td>{order.Number}</td>
+                      <td>{order.Product}</td>
+                      <td>₹{order.Price}</td>
+                      <td>{order.Banayega}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
         </div>
       ))}
     </div>
