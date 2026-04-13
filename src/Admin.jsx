@@ -16,10 +16,9 @@ function AdminDashboard() {
       .then((data) => setOrders(data));
   }, []);
 
-  const completed = orders.filter(
-    (o) => o.status?.toLowerCase() === "delivered",
+  const completed = orders.filter((o) =>
+    ["delivered", "completed"].includes(o.status?.toLowerCase()),
   );
-
   const filteredOrders =
     worker === "All"
       ? completed
