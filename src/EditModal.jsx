@@ -98,13 +98,13 @@ function EditModal({ isOpen, onClose, order, onUpdate }) {
         </div>
 
         <div className="formGroup">
-          <label>Worker</label>
+          <label>Person</label>
           <select
             name="Banayega"
             value={formData.Banayega}
             onChange={handleChange}
           >
-            <option value="">Select Worker</option>
+            <option value="">Select Person</option>
             <option value="Rinku">Rinku</option>
             <option value="Vijay">Vijay</option>
             <option value="Nitesh">Nitesh</option>

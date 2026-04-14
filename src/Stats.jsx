@@ -88,7 +88,7 @@ function Stats({ orders, worker }) {
                   <th>Number</th>
                   <th>Product</th>
                   <th>Price</th>
-                  <th>Worker</th>
+                  <th>Person</th>
                 </tr>
               </thead>
               <tbody>

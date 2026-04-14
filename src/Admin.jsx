@@ -162,7 +162,7 @@ function AdminDashboard() {
 
       {/* Worker Select */}
       <select value={worker} onChange={(e) => setWorker(e.target.value)}>
-        <option value="All">All Workers</option>
+        <option value="All">All Person</option>
         {workers.map((w) => (
           <option key={w} value={w}>
             {w}
@@ -212,7 +212,7 @@ function AdminDashboard() {
       </div>
       {/* Last 30 Days */}
       <div className="statsSection">
-        <h2>Last 30 Days Worker Performance</h2>
+        <h2>Last 30 Days Person Performance</h2>
 
         {last30.map((w) => (
           <div className="row" key={w.worker}>

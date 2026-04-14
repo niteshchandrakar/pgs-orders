@@ -18,9 +18,9 @@ function CompletedOrders() {
       });
   }, []);
 
-  const completedOrders = orders.filter(
-    (o) => o.status?.toLowerCase() === "delivered",
-  );
+  const completedOrders = orders
+    .filter((o) => o.status?.toLowerCase() === "completed")
+    .reverse();
 
   return (
     <div className="completedContainer">
@@ -42,7 +42,7 @@ function CompletedOrders() {
                 <th>Product</th>
                 <th>Price</th>
                 <th>Advance</th>
-                <th>Worker</th>
+                <th>Person</th>
                 <th>Completed Date</th>
               </tr>
             </thead>

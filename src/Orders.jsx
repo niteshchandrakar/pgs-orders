@@ -18,7 +18,6 @@ function Orders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completeLoading, setCompleteLoading] = useState(null);
-  const [deliveredLoading, setDeliveredLoading] = useState(null);
 
   useEffect(() => {
     loadOrders();
@@ -64,30 +63,9 @@ function Orders() {
     setCompleteLoading(null);
   };
 
-  // ✅ DELIVERED (remove from UI)
-  const markDelivered = async (timestamp) => {
-    setDeliveredLoading(timestamp);
-
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({
-        timestamp: timestamp,
-        status: "delivered",
-      }),
-    });
-
-    setOrders((prev) => prev.filter((o) => o.Timestamp !== timestamp));
-
-    setDeliveredLoading(null);
-  };
-
   // 🔥 FILTERS
   const pendingOrders = orders.filter(
-    (o) =>
-      o.status?.toLowerCase() !== "completed" &&
-      o.status?.toLowerCase() !== "delivered",
+    (o) => o.status?.toLowerCase() !== "completed",
   );
 
   const completedOrders = orders.filter(
@@ -98,11 +76,6 @@ function Orders() {
     worker === "All"
       ? pendingOrders
       : pendingOrders.filter((o) => o.Banayega === worker);
-
-  const filteredCompleted =
-    worker === "All"
-      ? completedOrders
-      : completedOrders.filter((o) => o.Banayega === worker);
 
   // 🔥 SORT pending by deadline
   const sortedPending = [...filteredPending].sort(
@@ -161,7 +134,7 @@ function Orders() {
           value={worker}
           onChange={(e) => handleWorkerChange(e.target.value)}
         >
-          <option value="All">All Workers</option>
+          <option value="All">All Person</option>
           <option value="Rinku">Rinku</option>
           <option value="Vijay">Vijay</option>
           <option value="Nitesh">Nitesh</option>
@@ -182,7 +155,7 @@ function Orders() {
                   <th>Product</th>
                   <th>Price</th>
                   <th>Advance</th>
-                  <th>Worker</th>
+                  <th>Person</th>
                   <th>Deadline</th>
                   <th>Edit</th>
                   <th>Complete</th>
@@ -234,59 +207,6 @@ function Orders() {
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
-          {/* 🟢 COMPLETED ORDERS */}
-          <h2 className="sectionTitle">Completed Orders</h2>
-
-          <div className="tableWrapper">
-            <table className="ordersTable completedTable">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Product</th>
-                  <th>Price</th>
-                  <th>Advance</th>
-                  <th>Remaining</th>
-                  <th>Worker</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {filteredCompleted.map((order, index) => {
-                  const price = parseInt(order.Price) || 0;
-                  const advance = parseInt(order.Advance) || 0;
-                  const remaining = price - advance;
-
-                  return (
-                    <tr key={index} className="completedRow">
-                      <td>{order.Number}</td>
-                      <td className="product">{order.Product}</td>
-
-                      <td className="price">₹{price}</td>
-                      <td className="advance">₹{advance}</td>
-                      <td className="remaining">₹{remaining}</td>
-
-                      <td className="worker">{order.Banayega}</td>
-
-                      <td>
-                        <button
-                          className="deliveredBtn"
-                          disabled={deliveredLoading === order.Timestamp}
-                          onClick={() => markDelivered(order.Timestamp)}
-                        >
-                          {deliveredLoading === order.Timestamp ? (
-                            <span className="loader"></span>
-                          ) : (
-                            "Delivered"
-                          )}
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
               </tbody>
             </table>
           </div>
