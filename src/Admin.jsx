@@ -31,7 +31,7 @@ function AdminDashboard() {
     if (worker === "All") {
       return workers.map((w) => {
         const workerOrders = completed.filter(
-          (o) => o.Banayega === w && dayjs(o.Time).isAfter(start),
+          (o) => o.Banayega === w && dayjs(o.Timestamp).isAfter(start),
         );
 
         const total = workerOrders.reduce(
@@ -54,7 +54,7 @@ function AdminDashboard() {
     }
 
     const workerOrders = filteredOrders.filter((o) =>
-      dayjs(o.Time).isAfter(start),
+      dayjs(o.Timestamp).isAfter(start),
     );
 
     const total = workerOrders.reduce(
@@ -82,12 +82,11 @@ function AdminDashboard() {
   // 🔥 Last 15 Days Production (with profit)
   const getLast15Days = () => {
     const stats = [];
-
     for (let i = 0; i < 30; i++) {
       const day = dayjs().subtract(i, "day").format("YYYY-MM-DD");
 
       const dayOrders = filteredOrders.filter(
-        (o) => dayjs(o.Time).format("YYYY-MM-DD") === day,
+        (o) => dayjs(o.Timestamp).format("YYYY-MM-DD") === day,
       );
 
       const total = dayOrders.reduce(
@@ -132,7 +131,7 @@ function AdminDashboard() {
       const monthName = month.format("MMM YYYY"); // Apr 2026
 
       const monthOrders = filteredOrders.filter(
-        (o) => dayjs(o.Time).format("YYYY-MM") === monthKey,
+        (o) => dayjs(o.Timestamp).format("YYYY-MM") === monthKey,
       );
 
       const total = monthOrders.reduce(
@@ -232,8 +231,8 @@ function AdminDashboard() {
           <div className="row" key={d.date}>
             <span>{d.date}</span>
             <span>{d.count} orders</span>
-            <span>₹{d.amount}</span>
             <span>₹{d.profit} profit</span>
+            <span>₹{d.amount}</span>
           </div>
         ))}
       </div>
