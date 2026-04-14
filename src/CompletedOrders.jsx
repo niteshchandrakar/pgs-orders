@@ -7,6 +7,7 @@ const SHEET_URL =
 function CompletedOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ function CompletedOrders() {
 
   const completedOrders = orders
     .filter((o) => o.status?.toLowerCase() === "completed")
+    .filter((o) => o.Number?.replace(/\s/g, "").includes(search))
     .reverse();
 
   return (
@@ -28,7 +30,25 @@ function CompletedOrders() {
         <button className="backBtn" onClick={() => navigate("/")}>
           ← Back
         </button>
-        <h1>Completed Orders</h1>
+
+        <div
+          style={{ margin: "10px 0", textAlign: "center", marginLeft: "50px" }}
+        >
+          <input
+            type="text"
+            placeholder="Search  Number"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{
+              padding: "8px 12px",
+              width: "250px",
+              borderRadius: "6px",
+              border: "1px solid #ccc",
+              outline: "none",
+              fontSize: "14px",
+            }}
+          />
+        </div>
       </div>
 
       {loading ? (
@@ -38,12 +58,12 @@ function CompletedOrders() {
           <table className="completedTable">
             <thead>
               <tr>
-                <th>Number</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Advance</th>
-                <th>Person</th>
-                <th>Completed Date</th>
+                <th style={{ backgroundColor: "green" }}>Number</th>
+                <th style={{ backgroundColor: "green" }}>Product</th>
+                <th style={{ backgroundColor: "green" }}>Price</th>
+                <th style={{ backgroundColor: "green" }}>Advance</th>
+                <th style={{ backgroundColor: "green" }}>Person</th>
+                <th style={{ backgroundColor: "green" }}>Completed</th>
               </tr>
             </thead>
 
