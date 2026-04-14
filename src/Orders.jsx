@@ -68,10 +68,6 @@ function Orders() {
     (o) => o.status?.toLowerCase() !== "completed",
   );
 
-  const completedOrders = orders.filter(
-    (o) => o.status?.toLowerCase() === "completed",
-  );
-
   const filteredPending =
     worker === "All"
       ? pendingOrders
